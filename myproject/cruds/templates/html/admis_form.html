@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admission Form</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+        .hidden {
+            display: none;
+        }
+        .add-new-link {
+            display: block;
+            margin-bottom: 10px;
+        }
+        .search-form {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- PhilHealth List -->
+    <table id="philhealthTable" class="hidden">
+        <thead>
+            <tr>
+                <th>PhilHealth No.</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for crud in cruds %}
+                <tr>
+                    <td>{{ crud.phealth_no }}</td>
+                    <td>{{ crud.lastName }}</td>
+                    <td>{{ crud.firstName }}</td>
+                    <td>{{ crud.middleName }}</td>
+                    <td>{{ crud.published_date }}</td>
+                    <td>
+                        <button type="button" class="add-philhealth" data-phealth-no="{{ crud.phealth_no }}">Add</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Hospital List -->
+    <table id="hospitalTable" class="hidden">
+        <thead>
+            <tr>
+                <th>Hospital ID</th>
+                <th>Hospital Name</th>
+                <th>Hospital Address</th>
+                <th>Other Information</th>
+                <th>Email</th>
+                <th>Mobile Number</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for hosp in hosps %}
+                <tr>
+                    <td>{{ hosp.hospital_id }}</td>
+                    <td>{{ hosp.hospitalName }}</td>
+                    <td>{{ hosp.hospitalAddr }}</td>
+                    <td>{{ hosp.otherInfo }}</td>
+                    <td>{{ hosp.email }}</td>
+                    <td>{{ hosp.mobileNo }}</td>
+                    <td>
+                        <button type="button" class="add-hospital" data-hospital-id="{{ hosp.hospital_id }}">Add</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        // Get the table elements
+        var philhealthTable = document.getElementById("philhealthTable");
+        var hospitalTable = document.getElementById("hospitalTable");
+
+        // Get the input fields
+        var philhealthInput = document.getElementById("id_phNo");
+        var hospitalInput = document.getElementById("id_hosp_id");
+
+        // Add event listeners to the input fields
+        philhealthInput.addEventListener('focus', function() {
+            philhealthTable.classList.remove("hidden");
+            hospitalTable.classList.add("hidden");
+        });
+
+        hospitalInput.addEventListener('focus', function() {
+            hospitalTable.classList.remove("hidden");
+            philhealthTable.classList.add("hidden");
+        });
+
+        // Hide tables when clicking outside the input fields
+        document.addEventListener('click', function(event) {
+            if (!philhealthInput.contains(event.target) && !hospitalInput.contains(event.target)) {
+                philhealthTable.classList.add("hidden");
+                hospitalTable.classList.add("hidden");
+            }
+        });
+
+        // Add PhilHealth number to input field
+        var philhealthButtons = document.querySelectorAll('.add-philhealth');
+        philhealthButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var phealthNo = button.getAttribute('data-phealth-no');
+                philhealthInput.value = phealthNo;
+                philhealthTable.classList.add("hidden");
+            });
+        });
+
+        // Add Hospital ID to input field
+        var hospitalButtons = document.querySelectorAll('.add-hospital');
+        hospitalButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var hospitalId = button.getAttribute('data-hospital-id');
+                hospitalInput.value = hospitalId;
+                hospitalTable.classList.add("hidden");
+            });
+        });
+    </script>
+</body>
+</html>

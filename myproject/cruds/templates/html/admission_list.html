@@ -1,0 +1,57 @@
+<!-- admission_list.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admission List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admission for PhilHealth No: {{ admissions.0.phNo }}</h1>
+    <a href="{% url 'crud_list' %}">Back to PhilHealth page</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Admission ID</th>
+                <th>PhilHealth Number</th>
+                <th>Hospital ID</th>
+                <th>Admission Date</th>
+                <th>Discharge Date</th>
+                <th>Diagnosis</th>
+                <th>Remarks</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for admission in admissions %}
+                <tr>
+                    <td>{{ admission.admID }}</td>
+                    <td>{{ admission.phNo }}</td>
+                    <td>{{ admission.hosp_id }}
+                        <a href="{% url 'hosp_detail' admission.hosp_id %}">View Information</a>
+                    </td>
+                    <td>{{ admission.admDate }}</td>
+                    <td>{{ admission.discDate }}</td>
+                    <td>{{ admission.diag }}</td>
+                    <td>{{ admission.rmrks }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="8">No admissions found for this PhilHealth member.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

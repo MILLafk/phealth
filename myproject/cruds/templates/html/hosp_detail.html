@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hospital</title>
+</head>
+<body>
+    <h1>Hospital</h1>
+    <table>
+        <tr>
+            <th>Hospital ID</th>
+            <td>{{ hosp.hospital_id }}</td>
+        </tr>
+        <tr>
+            <th>Hospital Name</th>
+            <td>{{ hosp.hospitalName }}</td>
+        </tr>
+        <tr>
+            <th>Hospital Address</th>
+            <td>{{ hosp.hospitalAddr }}</td>
+        </tr>
+        <tr>
+            <th>Other Information</th>
+            <td>{{ hosp.otherInfo }}</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>{{ hosp.email }}</td>
+        </tr>
+        <tr>
+            <th>Mobile Number</th>
+            <td>{{ hosp.mobileNo }}</td>
+        </tr>
+    </table>
+    <a href="{% url 'hosp_update' hosp.pk %}">Edit</a>
+    <form action="{% url 'hosp_delete' hosp.pk %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
+    <a href="{% url 'crud_list' %}">Back to list</a>
+</body>
+</html>

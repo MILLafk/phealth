@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PhilHealth List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>PhilHealth List</h1>
+    <a href="{% url 'crud_create' %}">Add new info</a>
+    <table>
+        <thead>
+            <tr>
+                <th>PhilHealth No.</th>
+                <th>Last Name</th>
+                <th>First Name</th>
+                <th>Middle Name</th>
+                <th>Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for crud in cruds %}
+                <tr>
+                    
+                    <td>{{ crud.phealth_no }}</td>
+                    <td>{{ crud.lastName }}</td>
+                    <td>{{ crud.firstName }}</td>
+                    <td>{{ crud.middleName }}</td>
+                    <td>{{ crud.published_date }}</td>
+                    <td>
+                        <a href="{% url 'crud_update' crud.pk %}">Edit</a>
+                        <form action="{% url 'crud_delete' crud.pk %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <h1>Hospital List</h1>
+    <a href="{% url 'hosp_create' %}">Add new info</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Hospital ID</th>
+                <th>Hospital Name</th>
+                <th>Hospital Address</th>
+                <th>Other Information</th>
+                <th>Email</th>
+                <th>Mobile Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for hosp in hosps %}
+                <tr>
+                    
+                    <td>{{ hosp.hospital_id }}</td>
+                    <td>{{ hosp.hospitalName }}</td>
+                    <td>{{ hosp.hospitalAddr }}</td>
+                    <td>{{ hosp.otherInfo }}</td>
+                    <td>{{ hosp.email }}</td>
+                    <td>{{ hosp.mobileNo }}</td>
+                    <td>
+                        <a href="{% url 'hosp_update' hosp.pk %}">Edit</a>
+                        <form action="{% url 'hosp_delete' hosp.pk %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

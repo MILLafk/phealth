@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PhilHealth</title>
+</head>
+<body>
+    <h1>PhilHealth</h1>
+    <table>
+        <tr>
+            <th>PhilHealth No.</th>
+            <td>{{ crud.phealth_no }}</td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td>{{ crud.lastName }}</td>
+        </tr>
+        <tr>
+            <th>First Name</th>
+            <td>{{ crud.firstName }}</td>
+        </tr>
+        <tr>
+            <th>Middle Name</th>
+            <td>{{ crud.middleName }}</td>
+        </tr>
+        <tr>
+            <th>Date</th>
+            <td>{{ crud.published_date }}</td>
+        </tr>
+    </table>
+    <a href="{% url 'crud_update' crud.pk %}">Edit</a>
+    <form action="{% url 'crud_delete' crud.pk %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit">Delete</button>
+    </form>
+    <a href="{% url 'crud_list' %}">Back to list</a>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admission List</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admission List</h1>
+    <a href="{% url 'admis_create' %}">Add new Admission</a>
+    <a href="{% url 'crud_list' %}">Back to PhilHealth page</a>
+    <table>
+        <thead>
+            <tr>
+                <th>Admission ID</th>
+                <th>PhilHealth Number</th>
+                <th>Hospital ID</th>
+                <th>Admission Date</th>
+                <th>Discharge Date</th>
+                <th>Diagnosis</th>
+                <th>Remarks</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for admi in admis %}
+                <tr>
+                    
+                    <td>{{ admi.admID }}</td>
+                    <td>{{ admi.phNo }}</td>
+                    <td>{{ admi.hosp_id }}</td>
+                    <td>{{ admi.admDate }}</td>
+                    <td>{{ admi.discDate }}</td>
+                    <td>{{ admi.diag }}</td>
+                    <td>{{ admi.rmrks }}</td>
+                    <td>
+                        <a href="{% url 'admis_update' admi.pk %}">Edit</a>
+                        <form action="{% url 'admis_delete' admi.pk %}" method="post" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
